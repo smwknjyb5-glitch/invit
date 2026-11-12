@@ -1,0 +1,124 @@
+ <!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>دعوة زواج قابلة للطباعة</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f1ea;--sf:#fff;--tx:#1f2a2e;--mu:#6b7478;--ac:#0f6b6b;--bd:#d8d2c4;--gold:#b8892f;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14191b;--sf:#1e2527;--tx:#ece8de;--mu:#9aa4a8;--ac:#3fb5b0;--bd:#333d40}}
+:root[data-theme="dark"]{--bg:#14191b;--sf:#1e2527;--tx:#ece8de;--mu:#9aa4a8;--ac:#3fb5b0;--bd:#333d40}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:'Amiri',Tahoma,serif;font-size:18px}
+.panel{max-width:720px;margin:0 auto;padding:16px}
+h1{font-size:26px;margin:8px 0 14px;color:var(--ac);text-align:center}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;background:var(--sf);border:1px solid var(--bd);border-radius:14px;padding:14px}
+.grid .full{grid-column:1/-1}
+label{display:block;font-size:15px;color:var(--mu);margin-bottom:4px}
+input,select{width:100%;font:inherit;font-size:17px;padding:9px 10px;border:1px solid var(--bd);border-radius:9px;background:var(--bg);color:var(--tx)}
+.btns{display:flex;gap:10px;margin-top:12px}
+button{flex:1;font:inherit;font-size:18px;padding:11px;border:0;border-radius:10px;background:var(--ac);color:#fff;cursor:pointer}
+button.alt{background:var(--sf);color:var(--tx);border:1px solid var(--bd)}
+.hint{font-size:14px;color:var(--mu);text-align:center;margin:10px 0}
+#wrap{display:flex;flex-direction:column;align-items:center;gap:14px;padding:8px 0 30px}
+.sheet{width:210mm;height:297mm;background:#fff;color:#222;display:grid;box-shadow:0 2px 12px rgba(0,0,0,.25);page-break-after:always;break-after:page;overflow:hidden}
+.sheet.l1{grid-template-columns:1fr;grid-template-rows:1fr;--fs:25px}
+.sheet.l2{grid-template-columns:1fr;grid-template-rows:1fr 1fr;--fs:21px}
+.sheet.l4{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;--fs:13.5px}
+.sheet.l6{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr 1fr;--fs:12.5px}
+.cell{border:1px dashed #bbb;padding:4mm;display:flex}
+.card{flex:1;border:2.5px double var(--gold);outline:1px solid var(--gold);outline-offset:-7px;padding:4% 6%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;font-size:var(--fs);line-height:1.9;color:#222}
+.card .bsm{font-weight:700;color:#0f6b6b;font-size:1.25em;margin-bottom:.4em}
+.card p{margin:.35em 0}
+.card .orn{color:var(--gold);letter-spacing:.4em;font-size:.9em}
+.card b{color:#7a5410}
+.card{position:relative;overflow:hidden}
+.card>*{position:relative;z-index:1}
+.card>.deco{position:absolute;z-index:0;width:22%;pointer-events:none}
+.deco.tl{top:3%;left:3%}
+.deco.tr{top:3%;right:3%;transform:scaleX(-1)}
+.deco.bl{bottom:3%;left:3%;transform:scaleY(-1)}
+.deco.br{bottom:3%;right:3%;transform:scale(-1,-1)}
+.card>.bg-img{position:absolute;z-index:0;inset:0;background-size:cover;background-position:center;opacity:.18}
+.top-img{max-width:45%;max-height:22%;object-fit:contain;margin-bottom:.4em}
+.blank{display:inline-block;min-width:5em;border-bottom:1.5px dotted #777}
+@media print{
+@page{size:A4;margin:0}
+body{background:#fff}
+.panel,.hint{display:none!important}
+#wrap{display:block!important;zoom:1!important;padding:0;gap:0}
+.sheet{box-shadow:none;margin:0}
+.cell{border-color:#ddd}
+}
+</style>
+</head>
+<body>
+<div class="panel">
+<h1>دعوة زواج قابلة للطباعة</h1>
+<div class="grid">
+<div><label>نوع المناسبة</label>
+<select id="type"><option>عقد قران</option><option>حفل زفاف</option><option>خطوبة</option><option>عقد زواج</option><option>وليمة عرس</option></select></div>
+<div><label>عدد البطاقات</label><input id="count" type="number" min="1" max="200" value="8" inputmode="numeric"></div>
+<div class="full"><label>اسما العروسين (اتركه فارغاً للكتابة باليد)</label><input id="names" placeholder="مثال: أحمد وفاطمة"></div>
+<div><label>التاريخ</label><input id="date" type="date"></div>
+<div><label>الساعة</label><input id="time" type="time"></div>
+<div class="full"><label>المكان (اختياري)</label><input id="place" placeholder="مثال: قاعة الأفراح، ..."></div>
+<div class="full"><label>عدد البطاقات في الصفحة الواحدة</label>
+<select id="per"><option value="1">بطاقة واحدة</option><option value="2">2</option><option value="4" selected>4</option><option value="6">6</option></select></div>
+<div><label>الزخرفة</label><select id="deco"><option value="flowers">أزهار في الزوايا</option><option value="hearts">قلوب في الزوايا</option><option value="joy">أجواء الفرح 🎉</option><option value="none">بدون زخرفة</option></select></div>
+<div><label>موضع صورتك الخاصة</label><select id="imgpos"><option value="top">أعلى البطاقة</option><option value="bg">خلفية خفيفة</option></select></div>
+<div class="full"><label>صورة خاصة بك: وردة، صورة فرح... (اختياري)</label><input id="img" type="file" accept="image/*"></div>
+</div>
+<div class="btns"><button id="go">عرض البطاقات</button><button id="pr" class="alt">طباعة / حفظ PDF</button></div>
+<p class="hint">للطباعة عند المطبعة: اختر «حفظ كـ PDF» من نافذة الطباعة ثم سلّم الملف. الخطوط المتقطعة بين البطاقات للقص.</p>
+</div>
+<div id="wrap"></div>
+<script>
+var $=function(i){return document.getElementById(i)};
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function val(v){return v?'<b>'+esc(v)+'</b>':'<span class="blank">&nbsp;</span>'}
+var userImg='';
+function fl(x,y,r,c){var s='';for(var a=0;a<360;a+=72){s+='<ellipse cx="'+x+'" cy="'+(y-r*0.8)+'" rx="'+(r*0.5)+'" ry="'+(r*0.8)+'" fill="'+c+'" transform="rotate('+a+' '+x+' '+y+')"/>'}return s+'<circle cx="'+x+'" cy="'+y+'" r="'+(r*0.33)+'" fill="#e8b84a"/>'}
+function ht(x,y,s,c){return '<path transform="translate('+x+' '+y+') scale('+s+')" fill="'+c+'" d="M0 20C-30 -2 -26 -22 -12 -22c6 0 10 4 12 8 2-4 6-8 12-8 14 0 18 20-12 42z"/>'}
+function decoHtml(o){
+  var g='';
+  if(o==='flowers')g='<g fill="none" stroke="#3a8a64" stroke-width="2" stroke-linecap="round"><path d="M6 94C12 58 32 30 64 10"/><path d="M16 72c9-1 15-7 17-15M28 52c9 0 16-5 19-13M42 36c8 0 14-4 17-11"/></g>'+fl(14,86,9,'#e58aa5')+fl(34,56,8,'#f2b6c6')+fl(56,30,7,'#e58aa5')+fl(80,12,6,'#f2b6c6');
+  else if(o==='hearts')g=ht(24,28,1.3,'#e58aa5')+ht(58,18,0.7,'#f2b6c6')+ht(18,62,0.7,'#f2b6c6')+ht(46,48,0.5,'#e8b84a');
+  else return '';
+  var out='';['tl','tr','bl','br'].forEach(function(p){out+='<svg class="deco '+p+'" viewBox="0 0 100 100">'+g+'</svg>'});
+  return out;
+}
+function card(){
+  var d=$('date').value,t=$('time').value,ds='',ts='';
+  if(d){try{ds=new Date(d+'T12:00:00').toLocaleDateString('ar-u-nu-latn',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}catch(e){ds=d}}
+  if(t){var p=t.split(':'),h=+p[0];ts=(h%12||12)+':'+p[1]+(h<12?' صباحاً':' مساءً')}
+  var pl=$('place').value.trim();
+  var o=$('deco').value,orn=o==='joy'?'🎉 ✨ 🎊':'✦ ✦ ✦',pos=$('imgpos').value,bg=(userImg&&pos==='bg')?'<div class="bg-img" style="background-image:url('+userImg+')"></div>':'',tp=(userImg&&pos==='top')?'<img class="top-img" src="'+userImg+'" alt="">':'';
+  return '<div class="card">'+bg+decoHtml(o)+tp+'<div class="bsm">بسم الله الرحمن الرحيم</div><div class="orn">'+orn+'</div>'+
+  '<p>بكل مشاعر الفرح والسرور، يسعدنا ويشرّفنا دعوتكم لمشاركتنا فرحتنا بمناسبة '+esc($('type').value)+' '+val($('names').value.trim())+'، وذلك يوم '+val(ds)+'، على الساعة '+val(ts)+'.</p>'+
+  (pl?'<p>المكان: <b>'+esc(pl)+'</b></p>':'')+
+  '<p>حضوركم يسعدنا ويزيد مناسبتنا بهجة، ونسأل الله أن يجعل هذا الزواج مباركاً، وأن يجمع بين العروسين في خير ومودة ورحمة.</p>'+
+  '<div class="orn">'+orn+'</div><p><b>أهلاً وسهلاً بكم، وشرف لنا حضوركم.</b></p></div>';
+}
+function render(){
+  var n=Math.max(1,Math.min(200,parseInt($('count').value)||1)),per=+$('per').value,html='',c=card(),i=0;
+  while(i<n){
+    var cells='';
+    for(var k=0;k<per;k++){cells+='<div class="cell">'+(i<n?c:'')+'</div>';i++}
+    html+='<div class="sheet l'+per+'">'+cells+'</div>';
+  }
+  var w=$('wrap');w.innerHTML=html;fit();
+}
+function fit(){var z=Math.min(1,(window.innerWidth-16)/794);$('wrap').style.zoom=z}
+$('img').onchange=function(e){var f=e.target.files[0];if(!f){userImg='';render();return}var r=new FileReader();r.onload=function(){userImg=r.result;render()};r.readAsDataURL(f)};
+$('deco').onchange=render;$('imgpos').onchange=render;
+$('go').onclick=render;
+$('pr').onclick=function(){render();setTimeout(function(){window.print()},150)};
+window.addEventListener('resize',fit);
+render();
+</script>
+</body>
+</html>
