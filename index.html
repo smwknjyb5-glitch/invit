@@ -1,10 +1,10 @@
- <!DOCTYPE html>    
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>دعوة زواج قابلة للطباعة</title>
-   <meta property="og:image" content="https://smwknjyb5-glitch.github.io/invit/invit.jpg">
+<meta property="og:image" content="https://smwknjyb5-glitch.github.io/invit/invit.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="صورة تطبيق لدعوة ">
@@ -22,11 +22,15 @@ h1{font-size:26px;margin:8px 0 14px;color:var(--ac);text-align:center}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;background:var(--sf);border:1px solid var(--bd);border-radius:14px;padding:14px}
 .grid .full{grid-column:1/-1}
 label{display:block;font-size:15px;color:var(--mu);margin-bottom:4px}
-input,select{width:100%;font:inherit;font-size:17px;padding:9px 10px;border:1px solid var(--bd);border-radius:9px;background:var(--bg);color:var(--tx)}
+input,select,textarea{width:100%;font:inherit;font-size:17px;padding:9px 10px;border:1px solid var(--bd);border-radius:9px;background:var(--bg);color:var(--tx)}
+textarea{resize:vertical;min-height:84px;line-height:1.7}
 .btns{display:flex;gap:10px;margin-top:12px}
 button{flex:1;font:inherit;font-size:18px;padding:11px;border:0;border-radius:10px;background:var(--ac);color:#fff;cursor:pointer}
 button.alt{background:var(--sf);color:var(--tx);border:1px solid var(--bd)}
+button.small{flex:none;font-size:15px;padding:6px 12px;margin-top:6px}
 .hint{font-size:14px;color:var(--mu);text-align:center;margin:10px 0}
+.note{font-size:13.5px;color:var(--mu);margin:4px 0 0;line-height:1.7}
+.sep{border:0;border-top:1px dashed var(--bd);margin:4px 0}
 #wrap{display:flex;flex-direction:column;align-items:center;gap:14px;padding:8px 0 30px}
 .sheet{width:210mm;height:297mm;background:#fff;color:#222;display:grid;box-shadow:0 2px 12px rgba(0,0,0,.25);page-break-after:always;break-after:page;overflow:hidden}
 .sheet.l1{grid-template-columns:1fr;grid-template-rows:1fr;--fs:25px}
@@ -64,12 +68,24 @@ body{background:#fff}
 <h1>دعوة زواج قابلة للطباعة</h1>
 <div class="grid">
 <div><label>نوع المناسبة</label>
-<select id="type"><option>عقد قران</option><option>حفل زفاف</option><option>خطوبة</option><option>عقد زواج</option><option>وليمة عرس</option></select></div>
+<select id="type"><option>عقد قران</option><option>حفل زفاف</option><option>خطوبة</option><option>عقد زواج</option><option>وليمة عرس</option><option>ختان</option><option>حفل ختان</option></select></div>
 <div><label>عدد البطاقات</label><input id="count" type="number" min="1" max="200" value="8" inputmode="numeric"></div>
-<div class="full"><label>اسما العروسين (اتركه فارغاً للكتابة باليد)</label><input id="names" placeholder="مثال: أحمد وفاطمة"></div>
+<div class="full"><label id="namesLbl">اسما العروسين (اتركه فارغاً للكتابة باليد)</label><input id="names" placeholder="مثال: أحمد وفاطمة"></div>
 <div><label>التاريخ</label><input id="date" type="date"></div>
 <div><label>الساعة</label><input id="time" type="time"></div>
 <div class="full"><label>المكان (اختياري)</label><input id="place" placeholder="مثال: قاعة الأفراح، ..."></div>
+
+<div class="full"><hr class="sep"></div>
+<div class="full"><label>نص الدعوة (يمكنك تعديله كما تشاء)</label>
+<textarea id="intro"></textarea>
+<p class="note">يمكنك استعمال هذه الكلمات داخل النص، وسيتم استبدالها تلقائياً: <b>[المناسبة]</b> &nbsp; <b>[الأسماء]</b> &nbsp; <b>[التاريخ]</b> &nbsp; <b>[الساعة]</b> &nbsp; <b>[المكان]</b></p></div>
+<div class="full"><label>الدعاء / الفقرة الثانية (اتركها فارغة لحذفها)</label>
+<textarea id="closing"></textarea></div>
+<div class="full"><label>العبارة الأخيرة (اتركها فارغة لحذفها)</label>
+<input id="last"></div>
+<div class="full"><button type="button" id="reset" class="alt small">استعادة النصوص الافتراضية لهذه المناسبة</button></div>
+<div class="full"><hr class="sep"></div>
+
 <div class="full"><label>عدد البطاقات في الصفحة الواحدة</label>
 <select id="per"><option value="1">بطاقة واحدة</option><option value="2">2</option><option value="4" selected>4</option><option value="6">6</option></select></div>
 <div><label>الزخرفة</label><select id="deco"><option value="flowers">أزهار في الزوايا</option><option value="hearts">قلوب في الزوايا</option><option value="joy">أجواء الفرح 🎉</option><option value="none">بدون زخرفة</option></select></div>
@@ -84,7 +100,41 @@ body{background:#fff}
 var $=function(i){return document.getElementById(i)};
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function val(v){return v?'<b>'+esc(v)+'</b>':'<span class="blank">&nbsp;</span>'}
-var userImg='';
+var userImg='',dirty=false;
+
+/* هل المناسبة ختان؟ */
+function isKhitan(){return $('type').value.indexOf('ختان')>-1}
+
+/* النصوص الافتراضية حسب المناسبة */
+function defaults(){
+  if(isKhitan()){
+    return{
+      intro:'بكل مشاعر الفرح والسرور، يسعدنا ويشرّفنا دعوتكم لمشاركتنا فرحتنا بمناسبة [المناسبة] الطفل [الأسماء]، وذلك يوم [التاريخ]، على الساعة [الساعة].',
+      closing:'حضوركم يسعدنا ويزيد مناسبتنا بهجة، ونسأل الله أن يجعل هذا الطفل قرة عين لوالديه، وأن ينبته نباتاً حسناً ويحفظه ويبارك فيه.',
+      last:'أهلاً وسهلاً بكم، وشرف لنا حضوركم.'
+    };
+  }
+  return{
+    intro:'بكل مشاعر الفرح والسرور، يسعدنا ويشرّفنا دعوتكم لمشاركتنا فرحتنا بمناسبة [المناسبة] [الأسماء]، وذلك يوم [التاريخ]، على الساعة [الساعة].',
+    closing:'حضوركم يسعدنا ويزيد مناسبتنا بهجة، ونسأل الله أن يجعل هذا الزواج مباركاً، وأن يجمع بين العروسين في خير ومودة ورحمة.',
+    last:'أهلاً وسهلاً بكم، وشرف لنا حضوركم.'
+  };
+}
+function applyDefaults(){
+  var d=defaults();
+  $('intro').value=d.intro;$('closing').value=d.closing;$('last').value=d.last;
+  dirty=false;
+}
+function updateLabels(){
+  if(isKhitan()){
+    $('namesLbl').textContent='اسم الطفل (اتركه فارغاً للكتابة باليد)';
+    $('names').placeholder='مثال: يوسف';
+  }else{
+    $('namesLbl').textContent='اسما العروسين (اتركه فارغاً للكتابة باليد)';
+    $('names').placeholder='مثال: أحمد وفاطمة';
+  }
+}
+
 function fl(x,y,r,c){var s='';for(var a=0;a<360;a+=72){s+='<ellipse cx="'+x+'" cy="'+(y-r*0.8)+'" rx="'+(r*0.5)+'" ry="'+(r*0.8)+'" fill="'+c+'" transform="rotate('+a+' '+x+' '+y+')"/>'}return s+'<circle cx="'+x+'" cy="'+y+'" r="'+(r*0.33)+'" fill="#e8b84a"/>'}
 function ht(x,y,s,c){return '<path transform="translate('+x+' '+y+') scale('+s+')" fill="'+c+'" d="M0 20C-30 -2 -26 -22 -12 -22c6 0 10 4 12 8 2-4 6-8 12-8 14 0 18 20-12 42z"/>'}
 function decoHtml(o){
@@ -95,17 +145,33 @@ function decoHtml(o){
   var out='';['tl','tr','bl','br'].forEach(function(p){out+='<svg class="deco '+p+'" viewBox="0 0 100 100">'+g+'</svg>'});
   return out;
 }
+
+/* تحويل النص المكتوب إلى HTML مع استبدال الكلمات الخاصة */
+function fmt(txt,vals){
+  var s=esc(txt);
+  s=s.replace(/\[المناسبة\]/g,'<b>'+esc(vals.type)+'</b>')
+     .replace(/\[الأسماء\]/g,val(vals.names))
+     .replace(/\[التاريخ\]/g,val(vals.ds))
+     .replace(/\[الساعة\]/g,val(vals.ts))
+     .replace(/\[المكان\]/g,val(vals.pl));
+  return s.replace(/\r?\n/g,'<br>');
+}
+
 function card(){
   var d=$('date').value,t=$('time').value,ds='',ts='';
   if(d){try{ds=new Date(d+'T12:00:00').toLocaleDateString('ar-u-nu-latn',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}catch(e){ds=d}}
   if(t){var p=t.split(':'),h=+p[0];ts=(h%12||12)+':'+p[1]+(h<12?' صباحاً':' مساءً')}
   var pl=$('place').value.trim();
+  var vals={type:$('type').value,names:$('names').value.trim(),ds:ds,ts:ts,pl:pl};
   var o=$('deco').value,orn=o==='joy'?'🎉 ✨ 🎊':'✦ ✦ ✦',pos=$('imgpos').value,bg=(userImg&&pos==='bg')?'<div class="bg-img" style="background-image:url('+userImg+')"></div>':'',tp=(userImg&&pos==='top')?'<img class="top-img" src="'+userImg+'" alt="">':'';
+  var intro=$('intro').value.trim(),closing=$('closing').value.trim(),last=$('last').value.trim();
+  var placeInIntro=intro.indexOf('[المكان]')>-1;
   return '<div class="card">'+bg+decoHtml(o)+tp+'<div class="bsm">بسم الله الرحمن الرحيم</div><div class="orn">'+orn+'</div>'+
-  '<p>بكل مشاعر الفرح والسرور، يسعدنا ويشرّفنا دعوتكم لمشاركتنا فرحتنا بمناسبة '+esc($('type').value)+' '+val($('names').value.trim())+'، وذلك يوم '+val(ds)+'، على الساعة '+val(ts)+'.</p>'+
-  (pl?'<p>المكان: <b>'+esc(pl)+'</b></p>':'')+
-  '<p>حضوركم يسعدنا ويزيد مناسبتنا بهجة، ونسأل الله أن يجعل هذا الزواج مباركاً، وأن يجمع بين العروسين في خير ومودة ورحمة.</p>'+
-  '<div class="orn">'+orn+'</div><p><b>أهلاً وسهلاً بكم، وشرف لنا حضوركم.</b></p></div>';
+  (intro?'<p>'+fmt(intro,vals)+'</p>':'')+
+  ((pl&&!placeInIntro)?'<p>المكان: <b>'+esc(pl)+'</b></p>':'')+
+  (closing?'<p>'+fmt(closing,vals)+'</p>':'')+
+  '<div class="orn">'+orn+'</div>'+
+  (last?'<p><b>'+fmt(last,vals)+'</b></p>':'')+'</div>';
 }
 function render(){
   var n=Math.max(1,Math.min(200,parseInt($('count').value)||1)),per=+$('per').value,html='',c=card(),i=0;
@@ -119,10 +185,14 @@ function render(){
 function fit(){var z=Math.min(1,(window.innerWidth-16)/794);$('wrap').style.zoom=z}
 $('img').onchange=function(e){var f=e.target.files[0];if(!f){userImg='';render();return}var r=new FileReader();r.onload=function(){userImg=r.result;render()};r.readAsDataURL(f)};
 $('deco').onchange=render;$('imgpos').onchange=render;
+$('type').onchange=function(){updateLabels();if(!dirty)applyDefaults();render()};
+['intro','closing','last'].forEach(function(id){$(id).oninput=function(){dirty=true;render()}});
+$('reset').onclick=function(){applyDefaults();render()};
 $('go').onclick=render;
 $('pr').onclick=function(){render();setTimeout(function(){window.print()},150)};
 window.addEventListener('resize',fit);
-render();
+updateLabels();applyDefaults();render();
 </script>
 </body>
 </html>
+ 
